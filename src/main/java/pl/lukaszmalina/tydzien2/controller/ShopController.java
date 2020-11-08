@@ -9,7 +9,7 @@ import pl.lukaszmalina.tydzien2.service.ShopService;
 @RestController
 public class ShopController {
 
-    ShopService service;
+    private ShopService service;
 
     @Autowired
     ShopController(ShopService service) {
