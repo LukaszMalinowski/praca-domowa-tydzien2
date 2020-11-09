@@ -2,13 +2,13 @@ package pl.lukaszmalina.tydzien2.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.lukaszmalina.tydzien2.entity.Product;
 import pl.lukaszmalina.tydzien2.repository.CartRepository;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Service
@@ -16,7 +16,10 @@ import java.util.List;
 public class ShopServicePlusImpl implements ShopService {
 
     @Value("${product.vat}")
-    private int vat;
+    private double vat;
+
+    @Value("${cart.products-quantity}")
+    private int productsQuantity;
 
     private RandomPriceGenerator priceGenerator;
 
@@ -30,11 +33,19 @@ public class ShopServicePlusImpl implements ShopService {
 
     @Override
     public List<Product> getCart() {
-        return null;
+        return repository.getCart();
     }
 
     @Override
     public void addFiveRandomProducts() {
+        for (int i = 0; i < productsQuantity; i++) {
+            BigDecimal randomPrice = priceGenerator.getRandomPrice();
+            randomPrice = addVat(randomPrice);
+            repository.addProduct(new Product(null, randomPrice));
+        }
+    }
 
+    private BigDecimal addVat(BigDecimal randomPrice) {
+        return randomPrice.add(BigDecimal.valueOf(vat/100).multiply(randomPrice)).setScale(2, RoundingMode.FLOOR);
     }
 }
