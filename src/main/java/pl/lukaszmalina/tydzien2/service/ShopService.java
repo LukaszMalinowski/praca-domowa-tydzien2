@@ -8,5 +8,5 @@ public interface ShopService {
 
     List<Product> getCart();
 
-    void addFiveRandomProducts();
+    void addRandomProducts();
 }

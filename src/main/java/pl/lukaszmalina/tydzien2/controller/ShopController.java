@@ -32,8 +32,10 @@ public class ShopController {
 
     public void getTotalPriceInCart() {
         List<Product> cart = service.getCart();
+
         final BigDecimal[] totalPrice = {new BigDecimal(0)};
         cart.forEach(product -> totalPrice[0] = totalPrice[0].add(product.getPrice()));
+
         System.out.println("Total price in cart: " + totalPrice[0]);
     }
 

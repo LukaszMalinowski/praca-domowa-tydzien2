@@ -24,7 +24,7 @@ public class ShopServiceProImpl extends ShopServicePlusImpl{
     }
 
     @Override
-    public void addFiveRandomProducts() {
+    public void addRandomProducts() {
         for (int i = 0; i < productsQuantity; i++) {
             BigDecimal randomPrice = priceGenerator.getRandomPrice();
             randomPrice = addVat(randomPrice);

@@ -22,8 +22,4 @@ public class CartRepository {
     public List<Product> getCart() {
         return cart;
     }
-
-    public void setCart(List<Product> cart) {
-        this.cart = cart;
-    }
 }

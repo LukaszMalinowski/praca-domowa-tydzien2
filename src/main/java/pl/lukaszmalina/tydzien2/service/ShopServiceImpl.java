@@ -32,7 +32,7 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public void addFiveRandomProducts() {
+    public void addRandomProducts() {
         for (int i = 0; i < productsQuantity; i++) {
             repository.addProduct(new Product("Product " + i, priceGenerator.getRandomPrice()));
         }
