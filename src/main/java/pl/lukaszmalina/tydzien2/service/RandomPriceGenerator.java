@@ -24,7 +24,6 @@ public class RandomPriceGenerator {
         random = new Random();
     }
 
-    @EventListener(ApplicationReadyEvent.class)
     public BigDecimal getRandomPrice() {
         BigDecimal randomPrice = BigDecimal.valueOf(random.nextDouble() * (maxPrice.doubleValue() - minPrice.doubleValue()) + minPrice.doubleValue());
         randomPrice = randomPrice.setScale(2, RoundingMode.FLOOR);

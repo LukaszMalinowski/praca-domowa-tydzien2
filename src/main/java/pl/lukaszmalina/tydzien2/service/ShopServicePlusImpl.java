@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import pl.lukaszmalina.tydzien2.entity.Product;
+import pl.lukaszmalina.tydzien2.repository.CartRepository;
 
 import java.util.List;
 
@@ -17,11 +18,14 @@ public class ShopServicePlusImpl implements ShopService {
     @Value("${product.vat}")
     private int vat;
 
-    private RandomPriceGenerator randomPriceGenerator;
+    private RandomPriceGenerator priceGenerator;
+
+    private CartRepository repository;
 
     @Autowired
-    public ShopServicePlusImpl(RandomPriceGenerator randomPriceGenerator) {
-        this.randomPriceGenerator = randomPriceGenerator;
+    public ShopServicePlusImpl(RandomPriceGenerator priceGenerator, CartRepository repository) {
+        this.priceGenerator = priceGenerator;
+        this.repository = repository;
     }
 
     @Override
@@ -32,10 +36,5 @@ public class ShopServicePlusImpl implements ShopService {
     @Override
     public void addFiveRandomProducts() {
 
-    }
-
-    @EventListener(ApplicationReadyEvent.class)
-    public void get() {
-        System.out.println(vat);
     }
 }

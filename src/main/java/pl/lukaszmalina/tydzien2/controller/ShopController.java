@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.web.bind.annotation.RestController;
+import pl.lukaszmalina.tydzien2.entity.Product;
 import pl.lukaszmalina.tydzien2.service.ShopService;
+
+import java.util.List;
 
 @RestController
 public class ShopController {
@@ -16,13 +19,20 @@ public class ShopController {
         this.service = service;
     }
 
-    @EventListener(ApplicationReadyEvent.class)
     public void addFiveRandomProducts() {
-        System.out.println(service.getClass().getName());
-        //TODO wywolaj metode z service'u
+        service.addFiveRandomProducts();
     }
 
     public void showCart() {
-        //TODO wyswietlenie koszyka
+        List<Product> cart = service.getCart();
+
+        cart.forEach(System.out::println);
+    }
+
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void test() {
+        addFiveRandomProducts();
+        showCart();
     }
 }
