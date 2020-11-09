@@ -21,7 +21,7 @@ public class ShopController {
     }
 
     public void addFiveRandomProducts() {
-        service.addFiveRandomProducts();
+        service.addRandomProducts();
     }
 
     public void showCart() {
@@ -31,12 +31,9 @@ public class ShopController {
     }
 
     public void getTotalPriceInCart() {
-        List<Product> cart = service.getCart();
+        BigDecimal totalPrice = service.getTotalPrice();
 
-        final BigDecimal[] totalPrice = {new BigDecimal(0)};
-        cart.forEach(product -> totalPrice[0] = totalPrice[0].add(product.getPrice()));
-
-        System.out.println("Total price in cart: " + totalPrice[0]);
+        System.out.println("Total price in cart: " + totalPrice);
     }
 
     @EventListener(ApplicationReadyEvent.class)

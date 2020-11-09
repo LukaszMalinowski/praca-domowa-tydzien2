@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import pl.lukaszmalina.tydzien2.entity.Product;
 import pl.lukaszmalina.tydzien2.repository.CartRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -36,5 +37,15 @@ public class ShopServiceImpl implements ShopService {
         for (int i = 0; i < productsQuantity; i++) {
             repository.addProduct(new Product("Product " + i, priceGenerator.getRandomPrice()));
         }
+    }
+
+    @Override
+    public BigDecimal getTotalPrice() {
+        List<Product> cart = repository.getCart();
+
+        final BigDecimal[] totalPrice = {new BigDecimal(0)};
+        cart.forEach(product -> totalPrice[0] = totalPrice[0].add(product.getPrice()));
+
+        return totalPrice[0];
     }
 }
