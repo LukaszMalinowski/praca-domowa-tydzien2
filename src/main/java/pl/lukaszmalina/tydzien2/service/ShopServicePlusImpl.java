@@ -9,43 +9,31 @@ import pl.lukaszmalina.tydzien2.repository.CartRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
 
 @Service
 @Profile("plus")
-public class ShopServicePlusImpl implements ShopService {
+public class ShopServicePlusImpl extends ShopServiceImpl {
 
     @Value("${product.vat}")
-    private double vat;
-
-    @Value("${cart.products-quantity}")
-    private int productsQuantity;
-
-    private RandomPriceGenerator priceGenerator;
-
-    private CartRepository repository;
+    protected double vat;
 
     @Autowired
-    public ShopServicePlusImpl(RandomPriceGenerator priceGenerator, CartRepository repository) {
-        this.priceGenerator = priceGenerator;
-        this.repository = repository;
+    public ShopServicePlusImpl(RandomPriceGenerator priceGenerator,
+                               CartRepository repository) {
+        super(priceGenerator, repository);
     }
 
-    @Override
-    public List<Product> getCart() {
-        return repository.getCart();
-    }
 
     @Override
     public void addFiveRandomProducts() {
         for (int i = 0; i < productsQuantity; i++) {
             BigDecimal randomPrice = priceGenerator.getRandomPrice();
             randomPrice = addVat(randomPrice);
-            repository.addProduct(new Product(null, randomPrice));
+            repository.addProduct(new Product("Product " + i, randomPrice));
         }
     }
 
-    private BigDecimal addVat(BigDecimal randomPrice) {
+    protected BigDecimal addVat(BigDecimal randomPrice) {
         return randomPrice.add(BigDecimal.valueOf(vat/100).multiply(randomPrice)).setScale(2, RoundingMode.FLOOR);
     }
 }

@@ -14,11 +14,11 @@ import java.util.List;
 public class ShopServiceImpl implements ShopService {
 
     @Value("${cart.products-quantity}")
-    private int productsQuantity;
+    protected int productsQuantity;
 
-    private RandomPriceGenerator priceGenerator;
+    protected RandomPriceGenerator priceGenerator;
 
-    private CartRepository repository;
+    protected CartRepository repository;
 
     @Autowired
     public ShopServiceImpl(RandomPriceGenerator priceGenerator, CartRepository repository) {
@@ -34,7 +34,7 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public void addFiveRandomProducts() {
         for (int i = 0; i < productsQuantity; i++) {
-            repository.addProduct(new Product(null, priceGenerator.getRandomPrice()));
+            repository.addProduct(new Product("Product " + i, priceGenerator.getRandomPrice()));
         }
     }
 }
