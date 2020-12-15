@@ -43,9 +43,15 @@ public class ShopServiceImpl implements ShopService {
     public BigDecimal getTotalPrice() {
         List<Product> cart = repository.getCart();
 
-        final BigDecimal[] totalPrice = {new BigDecimal(0)};
-        cart.forEach(product -> totalPrice[0] = totalPrice[0].add(product.getPrice()));
+        BigDecimal totalPrice = new BigDecimal(0);
 
-        return totalPrice[0];
+//        final BigDecimal[] totalPrice = {new BigDecimal(0)};
+//        cart.forEach(product -> totalPrice[0] = totalPrice[0].add(product.getPrice()));
+
+        for (Product product : cart) {
+            totalPrice = totalPrice.add(product.getPrice());
+        }
+
+        return totalPrice;
     }
 }
